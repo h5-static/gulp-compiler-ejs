@@ -10,7 +10,8 @@ module.exports = function(handler,options){
     var ext = options.ext ? options.ext : ".html";
     var stream = through.obj(function(file, enc, cb) {
         var _self = this;
-        new Compiler(file.contents.toString(),handler,{path:file.path},function(fileStream){
+        options.path = file.path;
+        new Compiler(file.contents.toString(),handler,options,function(fileStream){
             file.contents = fileStream;
              file.path = gutil.replaceExtension(file.path, ext);
             _self.push(file);
